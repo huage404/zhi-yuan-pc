@@ -1,17 +1,17 @@
 <template>
   <div class="login flex">
     <div class="login-l">
-      <div class="title">开源物联网平台</div>
-      <div class="desc">智能互联<span></span>畅享未来</div>
-      <div class="icon">
-        <img src="@/assets/images/login/let_img.png" alt="" />
+      <div class="flex items-center gap-x-2">
+        <img class="w-10 h-10" src="@/assets/logo/logo.svg" alt="logo" />
+        <h1 class="text-2xl">志远物联平台</h1>
       </div>
+
+      <footer>
+        <p class="text-center">版权所有 ©2024 广东志远物联网技术有限公司 | 粤ICP备2024168643号</p>
+      </footer>
     </div>
     <div class="login-r">
       <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-        <h3 class="logo">
-          <img src="@/assets/logo/logo.png" alt="" />
-        </h3>
         <div class="title">登录</div>
         <el-form-item prop="tenantId" v-if="tenantEnabled">
           <el-select v-model="loginForm.tenantId" filterable placeholder="请选择/输入公司名称" style="width: 100%">
@@ -60,6 +60,10 @@
         <span>Copyright © 2023 OPEN IITA</span>
       </div>
     </div>
+
+    <video class="absolute inset-0 -z-10 w-full h-full object-cover" src="@/assets/vedeo/login/bg_signIn.mp4" loop muted>
+      <source src="@/assets/vedeo/login/bg_signIn.mp4" />
+    </video>
   </div>
 </template>
 
@@ -190,15 +194,14 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .login {
+  position: relative;
   height: 100%;
   &-l {
-    width: 50%;
-    padding: 0 60px;
-    background-image: url('@/assets/images/login/bg.png');
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    padding: 20px 60px;
     position: relative;
     overflow: hidden;
     &::after {
@@ -283,13 +286,15 @@ onMounted(() => {
       color: rgba(11, 29, 48, 1);
       font-size: 24px;
       margin-bottom: 30px;
+      text-align: center;
       font-weight: 600;
     }
     .login-form {
+      padding: 20px 16px;
       border-radius: 6px;
-      background: #ffffff;
       width: 400px;
       position: relative;
+      background-color: white;
       z-index: 2;
       .el-input {
         height: 40px;

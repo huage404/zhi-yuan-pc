@@ -1,523 +1,307 @@
 <template>
-  <div class="app-container home">
-    <el-space direction="vertical" :fill="true" size="large" wrap style="width: 100%;">
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <el-card class="box-card card1" shadow="never">
-            <div class="title">品类数量</div>
-            <div class="text numbers">20</div>
-            <el-divider />
-            <div class="increase">今日新增 <sup>↝ 0</sup></div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card class="box-card card2" shadow="never">
-            <div class="title">产品数量</div>
-            <div class="text numbers">32</div>
-            <el-divider />
-            <div class="increase">今日新增 <sup>↝ 0</sup></div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card class="box-card card3" shadow="never">
-            <div class="title">设备数量</div>
-            <div class="text numbers">1012</div>
-            <el-divider />
-            <div class="increase">今日新增 <sup>↝ 0</sup></div>
-          </el-card>
-        </el-col>
-        <el-col :span="6">
-          <el-card class="box-card card4" shadow="never">
-            <div class="title">上报数据量</div>
-            <div class="text numbers">2921</div>
-            <el-divider />
-            <div class="increase">今日新增 <sup>↝ 0</sup></div>
-          </el-card>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-card class="box-card1" shadow="never">
-            <template #header>
-              <div class="card-header">
-                <h3>设备数量统计</h3>
+  <div class="w-full h-full page-background">
+    <div class="container mx-auto flex flex-col gap-y-5 ">
+      <h3 className="text-lg text-color-text pt-10 pb-7">
+        通过互联网方式实现企业单位消防和视频AI感知，设备云端接入，大幅降低基础设施投入和运营管理成本，实现企业消防业务的低成本、智慧化管理。
+      </h3>
+
+      <div v-for="(group, groupIndex) in menuList" :key="group.groupId + groupIndex.toString()">
+        <h4 class="mb-5 text-xl font-bold">{{ group.groupName }}</h4>
+        <el-row :gutter="20">
+          <el-col v-for="(menu, menuIndex) in group.menuList" :key="menu.id + menuIndex.toString()" :span="6">
+            <div class="group relative menu-card-container">
+              <div class="menu-card">
+                <h6 class="text-lg font-bold leading-none my-0">{{ menu.title }}</h6>
+                <p class="relative z-20 line-clamp-2 break-words text-sm">{{ menu.description }}</p>
+                <div class="menu-card-icon" />
               </div>
-            </template>
-            <div class="chart-device-num" ref="chartDeviceNumStat"></div>
-            <div style="position: absolute;left: 13%;top:50%;font-size: 30px;">11234</div>
-          </el-card>
-        </el-col>
-        <el-col :span="12">
-          <el-card class="box-card1" shadow="never">
-            <template #header>
-              <div class="card-header">
-                <h3>设备状态统计</h3>
-              </div>
-            </template>
-            <el-row>
-              <el-col :span="6">
-                <div class="chart-device-online" ref="chartDeviceOnline"></div>
-                <div class="dev-sub online">
-                  在线设备<br />
-                  <p>80%</p>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="chart-device-offline" ref="chartDeviceOffline"></div>
-                <div class="dev-sub">离线设备</div>
-              </el-col>
-              <el-col :span="6">
-                <div class="chart-device-active" ref="chartDeviceActive"></div>
-                <div class="dev-sub">待激活设备</div>
-              </el-col>
-              <el-col :span="6"></el-col>
-            </el-row>
-          </el-card>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="24">
-          <el-card class="box-card1" shadow="never">
-            <template #header>
-              <div class="card-header">
-                <h3>消息量统计</h3>
-              </div>
-            </template>
-            <div class="chart-msg-stat" ref="chartMsgStat"></div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </el-space>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup name="Index" lang="ts">
-import * as echarts from 'echarts/core'
-import { TooltipComponent, LegendComponent, TitleComponent, ToolboxComponent, GridComponent } from 'echarts/components'
-import { PieChart, LineChart, GaugeChart } from 'echarts/charts'
-import { LabelLayout, UniversalTransition } from 'echarts/features'
-import { CanvasRenderer } from 'echarts/renderers'
 
-echarts.use([
-  TooltipComponent,
-  LegendComponent,
-  PieChart,
-  CanvasRenderer,
-  LabelLayout,
-  TitleComponent,
-  ToolboxComponent,
-  GridComponent,
-  LineChart,
-  UniversalTransition,
-  GaugeChart,
-])
-const chartDeviceNumStat = ref()
-const chartDeviceOnline = ref()
-const chartDeviceOffline = ref()
-const chartDeviceActive = ref()
-const chartMsgStat = ref()
-
-const goTarget = (url: string) => {
-  window.open(url, '__blank')
-}
-
-onMounted(() => {
-  document.getElementById('breadcrumb-container')!.style.display = 'none'
-
-  echarts.init(chartDeviceNumStat.value).setOption({
-    tooltip: {
-      trigger: 'item',
-    },
-    legend: {
-      top: '5%',
-      right: '10%',
-      align: 'left',
-      orient: 'vertical',
-      icon: 'circle',
-    },
-    series: [
+const menuList = [
+  {
+    groupId: 0,
+    groupName: '数据可视化',
+    menuList: [
       {
-        name: 'Access From',
-        type: 'pie',
-        radius: ['50%', '80%'],
-        avoidLabelOverlap: false,
-        center: ['30%', '50%'],
-        label: {
-          show: false,
-          position: 'outside',
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 20,
-            fontWeight: 'bold',
-          },
-        },
-        labelLine: {
-          show: false,
-        },
-        data: [
-          { value: 1048, name: '一路开关' },
-          { value: 735, name: '插座' },
-          { value: 580, name: '二路开关' },
-          { value: 484, name: '门磁' },
-          { value: 300, name: '门锁' },
-          { value: 300, name: '水表' },
-          { value: 300, name: '电表' },
-          { value: 300, name: '水泵' },
-          { value: 220, name: '智能风扇' },
-          { value: 300, name: '调光灯' },
-        ],
+        id: 0,
+        title: '数智监管驾驶舱',
+        description: '快速了解运营业务整体状况',
+        path: '/operate',
+      },
+      {
+        id: 1,
+        title: '智慧消防云服务平台',
+        description: '快速了解运营业务整体状况',
+        path: '/servicePlatform',
       },
     ],
-  })
-
-  echarts.init(chartDeviceOnline.value).setOption({
-    series: [
+  },
+  {
+    groupId: 1,
+    groupName: '业务管理',
+    menuList: [
       {
-        type: 'gauge',
-        startAngle: 360,
-        endAngle: 0,
-        progress: {
-          show: true,
-          width: 12,
-          itemStyle: {
-            color: '#00dd99',
-          },
-        },
-        axisLine: {
-          lineStyle: {
-            width: 12,
-          },
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        pointer: {
-          show: false,
-        },
-        anchor: {
-          show: false,
-        },
-        title: {
-          show: false,
-        },
-        detail: {
-          valueAnimation: true,
-          fontSize: 20,
-          offsetCenter: [0, '0'],
-          formatter: function (value) {
-            return value + '个'
-          },
-        },
-        data: [
-          {
-            value: 82,
-          },
-        ],
+        id: 0,
+        title: '基础配置',
+        description: '提供单位管理、设备管理、资源上图、报警通知等基础功能',
+        path: '/organization',
       },
     ],
-  })
-
-  echarts.init(chartDeviceOffline.value).setOption({
-    series: [
-      {
-        type: 'gauge',
-        startAngle: 360,
-        endAngle: 0,
-        progress: {
-          show: true,
-          width: 12,
-          itemStyle: {
-            color: '#ff5500',
-          },
-        },
-        axisLine: {
-          lineStyle: {
-            width: 12,
-          },
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        pointer: {
-          show: false,
-        },
-        anchor: {
-          show: false,
-        },
-        title: {
-          show: false,
-        },
-        detail: {
-          valueAnimation: true,
-          fontSize: 20,
-          offsetCenter: [0, '0'],
-          formatter: function (value) {
-            return value + '个'
-          },
-        },
-        data: [
-          {
-            value: 14,
-          },
-        ],
-      },
-    ],
-  })
-
-  echarts.init(chartDeviceActive.value).setOption({
-    series: [
-      {
-        type: 'gauge',
-        startAngle: 360,
-        endAngle: 0,
-        progress: {
-          show: true,
-          width: 12,
-          itemStyle: {
-            color: '#0055bb',
-          },
-        },
-        axisLine: {
-          lineStyle: {
-            width: 12,
-          },
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        pointer: {
-          show: false,
-        },
-        anchor: {
-          show: false,
-        },
-        title: {
-          show: false,
-        },
-        detail: {
-          valueAnimation: true,
-          fontSize: 20,
-          offsetCenter: [0, '0'],
-          formatter: function (value) {
-            return value + '个'
-          },
-        },
-        data: [
-          {
-            value: 3,
-          },
-        ],
-      },
-    ],
-  })
-
-  echarts.init(chartMsgStat.value).setOption({
-    title: {},
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      data: ['上行消息量', '下行消息量'],
-      textStyle: {
-        fontWeight: 'bolder',
-      },
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true,
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['02-01', '02-02', '02-03', '02-04', '02-05', '02-06', '02-07'],
-    },
-    yAxis: {
-      type: 'value',
-    },
-    series: [
-      {
-        name: '上行消息量',
-        type: 'line',
-        stack: 'Total',
-        data: [120, 132, 101, 134, 90, 230, 210],
-      },
-      {
-        name: '下行消息量',
-        type: 'line',
-        stack: 'Total',
-        data: [220, 182, 191, 234, 290, 330, 310],
-      },
-    ],
-  })
-})
+  },
+];
 </script>
 
 <style scoped lang="scss">
-.home {
-  blockquote {
-    padding: 10px 20px;
-    margin: 0 0 20px;
-    font-size: 17.5px;
-    border-left: 5px solid #eee;
-  }
-  hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #eee;
-  }
-  .col-item {
-    margin-bottom: 20px;
-  }
+/*菜单容器样式*/
 
-  ul {
-    padding: 0;
-    margin: 0;
-  }
+$border-color: #2964f0;
 
-  font-family: 'open sans', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Microsoft YaHei';
-  font-size: 13px;
-  color: #676a6c;
-  overflow-x: hidden;
+.page-background{
+  background-image: url("@/assets/images/index/bg_home.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
-  ul {
-    list-style-type: none;
-  }
+.menu-card-container {
+  .menu-card {
+    position: relative;
+    padding: 30px 20px;
+    width: 100%;
+    height: 148px;
+    border-radius: 12px;
+    background-image: linear-gradient(313deg, #eaefff, #eef2ff);
+    cursor: pointer;
 
-  h4 {
-    margin-top: 0px;
-  }
-
-  h2 {
-    margin-top: 10px;
-    font-size: 26px;
-    font-weight: 100;
-  }
-
-  p {
-    margin-top: 10px;
-
-    b {
-      font-weight: 700;
-    }
-  }
-
-  .update-log {
-    ol {
+    &::before,
+    &::after {
+      content: " ";
       display: block;
-      list-style-type: decimal;
-      margin-block-start: 1em;
-      margin-block-end: 1em;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      padding-inline-start: 40px;
+      clip-path: inset(0 0 100% 100%);
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      border-width: 2px 0 0 2px;
+      border-style: solid;
+      border-color: $border-color;
+    }
+
+    &::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      border-width: 0 2px 2px 0;
+      border-style: solid;
+      border-color: $border-color;
     }
   }
 
-  .box-card {
-    background-position-x: right;
-    background-repeat: no-repeat;
+  .menu-card-icon {
+    position: absolute;
+    top: -4.0625rem;
+    right: -12px;
+    height: 12.5rem;
+    width: 12.5rem;
+    transform: scale(0.74);
+    background: url('@/assets/images/index/icon_menuCard_01.png') no-repeat 0 0;
+    background-size: auto 200%;
+  }
 
-    :first-child {
-      padding: 0px 8px 0px !important;
-      min-height: 0px;
-    }
-    .title {
-      font-size: 18px;
-      line-height: 50px;
-      font-weight: bold;
-      color: #999;
-    }
-    .numbers {
-      font-size: 38px;
-      font-weight: bold;
-      padding-left: 10px;
-    }
-    .increase {
-      padding: 0 10px 15px 10px;
-      font-weight: bold;
-      color: #999;
-      sup {
-        font-size: 20px;
-        color: #00dd00;
+  &:hover {
+    .menu-card {
+      background-image: linear-gradient(313deg, #eaefff, #d9e0ff);
+
+      &::before {
+        animation: border-animate-top-left-data 1s linear forwards;
+      }
+
+      &::after {
+        animation: border-animate-bottom-right-data 1s linear 0.5s forwards;
       }
     }
-  }
 
-  .box-card.card1 {
-    background-image: url('@/assets/images/index/card1.png');
-  }
-
-  .box-card.card2 {
-    background-image: url('@/assets/images/index/card2.png');
-  }
-
-  .box-card.card3 {
-    background-image: url('@/assets/images/index/card3.png');
-  }
-
-  .box-card.card4 {
-    background-image: url('@/assets/images/index/card4.png');
-  }
-
-  .box-card1 {
-    :first-child {
-      padding: 0px 8px 0px !important;
-      min-height: 0px;
+    .menu-card-icon {
+      animation: icon-animate-data 1s steps(1) forwards;
     }
   }
+}
 
-  .chart-device-num {
-    height: 200px;
-  }
-  .chart-device-online,
-  .chart-device-offline,
-  .chart-device-active {
-    height: 120px;
-  }
-  .chart-msg-stat {
-    height: 250px;
-  }
 
-  .dev-sub {
-    height: 80px;
-    line-height: 20px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
+@keyframes border-animate-top-left-data {
+  0% {
+    clip-path: inset(0 0 8.125rem 100%);
   }
+  25% {
+    clip-path: inset(0 0 8.125rem 0);
+  }
+  50%, 100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
 
-  .dev-sub.online {
-    p {
-      color: #00dd99;
-    }
+@keyframes border-animate-bottom-right-data {
+  0%, 50% {
+    clip-path: inset(8.125rem 100% 0 0);
+  }
+  25% {
+    clip-path: inset(8.125rem 0 0 0);
+  }
+  50%, 100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes icon-animate-data {
+  0% {
+    background-position: 0 0;
+  }
+  2.27% {
+    background-position: -12.5rem 0;
+  }
+  4.55% {
+    background-position: -25rem 0
+  }
+  6.82% {
+    background-position: -37.5rem 0
+  }
+  9.09% {
+    background-position: -50rem 0
+  }
+  11.36% {
+    background-position: -62.5rem 0
+  }
+  13.64% {
+    background-position: -75rem 0
+  }
+  15.91% {
+    background-position: -87.5rem 0
+  }
+  18.18% {
+    background-position: -100rem 0
+  }
+  20.45% {
+    background-position: -112.5rem 0
+  }
+  22.73% {
+    background-position: -125rem 0
+  }
+  25.00% {
+    background-position: -137.5rem 0
+  }
+  27.27% {
+    background-position: -150rem 0
+  }
+  29.55% {
+    background-position: -162.5rem 0
+  }
+  31.82% {
+    background-position: -175rem 0
+  }
+  34.09% {
+    background-position: -187.5rem 0
+  }
+  36.36% {
+    background-position: -200rem 0
+  }
+  38.64% {
+    background-position: -212.5rem 0
+  }
+  40.91% {
+    background-position: -225rem 0
+  }
+  43.18% {
+    background-position: -237.5rem 0
+  }
+  45.45% {
+    background-position: -250rem 0
+  }
+  47.73% {
+    background-position: -262.5rem 0
+  }
+  50.00% {
+    background-position: -275rem 0
+  }
+  52.27% {
+    background-position: -287.5rem 0
+  }
+  54.55% {
+    background-position: -300rem 0
+  }
+  56.82% {
+    background-position: 0 -12.5rem
+  }
+  59.09% {
+    background-position: -12.5rem -12.5rem
+  }
+  61.36% {
+    background-position: -25rem -12.5rem
+  }
+  63.64% {
+    background-position: -37.5rem -12.5rem
+  }
+  65.91% {
+    background-position: -50rem -12.5rem
+  }
+  68.18% {
+    background-position: -62.5rem -12.5rem
+  }
+  70.45% {
+    background-position: -75rem -12.5rem
+  }
+  72.73% {
+    background-position: -87.5rem -12.5rem
+  }
+  75.00% {
+    background-position: -100rem -12.5rem
+  }
+  77.27% {
+    background-position: -112.5rem -12.5rem
+  }
+  79.55% {
+    background-position: -125rem -12.5rem
+  }
+  81.82% {
+    background-position: -137.5rem -12.5rem
+  }
+  84.09% {
+    background-position: -150rem -12.5rem
+  }
+  86.36% {
+    background-position: -162.5rem -12.5rem
+  }
+  88.64% {
+    background-position: -175rem -12.5rem
+  }
+  90.91% {
+    background-position: -187.5rem -12.5rem
+  }
+  93.18% {
+    background-position: -200rem -12.5rem
+  }
+  95.45% {
+    background-position: -212.5rem -12.5rem
+  }
+  97.73% {
+    background-position: -225rem -12.5rem
+  }
+  100.00% {
+    background-position: -237.5rem -12.5rem
   }
 }
 </style>
