@@ -1,29 +1,32 @@
 <template>
   <div class="w-full h-full page-background">
-    <div class="container mx-auto flex flex-col gap-y-5 ">
-      <h3 className="text-lg text-color-text pt-10 pb-7">
-        通过互联网方式实现企业单位消防和视频AI感知，设备云端接入，大幅降低基础设施投入和运营管理成本，实现企业消防业务的低成本、智慧化管理。
-      </h3>
+    <FloatActionProvider>
+      <div class="container mx-auto flex flex-col gap-y-5 ">
+        <h3 className="text-lg text-color-text pt-10 pb-7">
+          通过互联网方式实现企业单位消防和视频AI感知，设备云端接入，大幅降低基础设施投入和运营管理成本，实现企业消防业务的低成本、智慧化管理。
+        </h3>
 
-      <div v-for="(group, groupIndex) in menuList" :key="group.groupId + groupIndex.toString()">
-        <h4 class="mb-5 text-xl font-bold">{{ group.groupName }}</h4>
-        <el-row :gutter="20">
-          <el-col v-for="(menu, menuIndex) in group.menuList" :key="menu.id + menuIndex.toString()" :span="6">
-            <div class="group relative menu-card-container">
-              <div class="menu-card">
-                <h6 class="text-lg font-bold leading-none my-0">{{ menu.title }}</h6>
-                <p class="relative z-20 line-clamp-2 break-words text-sm">{{ menu.description }}</p>
-                <div class="menu-card-icon" />
+        <div v-for="(group, groupIndex) in menuList" :key="group.groupId + groupIndex.toString()">
+          <h4 class="mb-5 text-xl font-bold">{{ group.groupName }}</h4>
+          <el-row :gutter="20">
+            <el-col v-for="(menu, menuIndex) in group.menuList" :key="menu.id + menuIndex.toString()" :span="6">
+              <div class="group relative menu-card-container">
+                <div class="menu-card">
+                  <h6 class="text-lg font-bold leading-none my-0">{{ menu.title }}</h6>
+                  <p class="relative z-20 line-clamp-2 break-words text-sm">{{ menu.description }}</p>
+                  <div class="menu-card-icon" />
+                </div>
               </div>
-            </div>
-          </el-col>
-        </el-row>
+            </el-col>
+          </el-row>
+        </div>
       </div>
-    </div>
+    </FloatActionProvider>
   </div>
 </template>
 
 <script setup name="Index" lang="ts">
+import FloatActionProvider from '@/components/FloatActionProvider'
 
 const menuList = [
   {

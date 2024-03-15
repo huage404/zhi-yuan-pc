@@ -1,25 +1,27 @@
 <template>
   <div :class="classObj" class="app-wrapper" :style="{ '--current-color': theme }">
-    <!-- <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
-    <div :class="{ hasTagsView: needTagsView, sidebarHide: sidebar.hide }" class="main-container">
-      <!-- <el-scrollbar>
+    <FloatActionProvider>
+      <!-- <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
+      <div :class="{ hasTagsView: needTagsView, sidebarHide: sidebar.hide }" class="main-container">
+        <!-- <el-scrollbar>
+          <div :class="{ 'fixed-header': fixedHeader }">
+            <navbar ref="navbarRef" @setLayout="setLayout" />
+            <tags-view v-if="needTagsView" />
+          </div>
+          <app-main />
+          <settings ref="settingRef" />
+        </el-scrollbar> -->
         <div :class="{ 'fixed-header': fixedHeader }">
           <navbar ref="navbarRef" @setLayout="setLayout" />
           <tags-view v-if="needTagsView" />
         </div>
-        <app-main />
-        <settings ref="settingRef" />
-      </el-scrollbar> -->
-      <div :class="{ 'fixed-header': fixedHeader }">
-        <navbar ref="navbarRef" @setLayout="setLayout" />
-        <tags-view v-if="needTagsView" />
+        <div class="layout-box">
+          <side-bar v-if="!sidebar.hide" class="sidebar-container" />
+          <app-main />
+        </div>
+        <!-- <settings ref="settingRef" /> -->
       </div>
-      <div class="layout-box">
-        <side-bar v-if="!sidebar.hide" class="sidebar-container" />
-        <app-main />
-      </div>
-      <!-- <settings ref="settingRef" /> -->
-    </div>
+    </FloatActionProvider>
   </div>
 </template>
 
@@ -28,6 +30,7 @@ import SideBar from './components/Sidebar/index.vue'
 import { AppMain, Navbar, Settings, TagsView } from './components'
 import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'
+import FloatActionProvider from '@/components/FloatActionProvider'
 
 const settingsStore = useSettingsStore()
 const theme = computed(() => settingsStore.theme)

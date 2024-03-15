@@ -1,5 +1,6 @@
 // 告警Api
 import request from '@/utils/request'
+import alovaInstance from '@/utils/alovaInstance'
 
 enum Api {
   configList = '/alert/selectAlertConfigPage',
@@ -40,4 +41,8 @@ export const getMsgList = (data) => {
     method: 'post',
     data,
   })
+}
+// 使用 alova 获取告警消息
+export const getMsgListWithAlova = (data) => {
+  return alovaInstance.Post(Api.msgList, data)
 }
