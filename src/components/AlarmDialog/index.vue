@@ -78,7 +78,7 @@ const iconDataBase = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53
       </template>
 
       <div class="flex h-full">
-        <Sidebar :list="alarmCardList" :loading="loading" :noMore="isLastPage" @load="handleNextPage" />
+        <Sidebar :list="alarmCardList" :loading="loading" :noMore="isLastPage" @load="handleNextPage" @close="hideDialog" />
         <Content :isEmpty="true" @close="hideDialog" />
       </div>
     </el-dialog>

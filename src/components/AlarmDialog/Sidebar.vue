@@ -10,7 +10,8 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-  (e: 'load'): void
+  (e: 'load'): void;
+  (e: 'close'): void;
 }>()
 
 /*------------------------ Menu Logic Start ---------------------------*/
@@ -41,6 +42,10 @@ const currentAlarmCardIndexChange = (index) => {
 
 const bottomScrollTrigger = () => {
   emits('load')
+}
+
+const handleClose = () => {
+  emits('close')
 }
 
 /*------------------------ List Data Logic End ---------------------------*/
@@ -119,7 +124,7 @@ const alarmCardVariant = cva('box-content border-2 border-solid rounded-xl py-3 
     </div>
 
     <footer class="mt-auto h-16 flex items-center">
-      <a class="flex items-center gax-x-1 text-sm leading-16 text-[#2964f0] cursor-pointer" href="/#/alarm/list">
+      <a class="flex items-center gax-x-1 text-sm leading-16 text-[#2964f0] cursor-pointer" href="/#/alarm/list" @click="handleClose">
         <span>更多报警</span>
         <el-icon><ArrowRight /></el-icon>
       </a>
