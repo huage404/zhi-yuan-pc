@@ -84,6 +84,19 @@ export const constantRoutes: RouteOption[] = [
       },
     ],
   },
+  {
+    path: '/dashboard',
+    hidden: true,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'digital-supervision',
+        component: () => import('@/views/dashboard/digitalSupervision/index.vue'),
+        name: 'Profile',
+        meta: { title: '数智監管驾驶舱', icon: 'dashboard' },
+      },
+    ],
+  },
 ]
 
 // 动态路由，基于用户权限动态去加载

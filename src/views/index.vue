@@ -10,7 +10,7 @@
           <h4 class="mb-5 text-xl font-bold">{{ group.groupName }}</h4>
           <el-row :gutter="20">
             <el-col v-for="(menu, menuIndex) in group.menuList" :key="menu.id + menuIndex.toString()" :span="6">
-              <div class="group relative menu-card-container">
+              <div class="group relative menu-card-container" @click="() => jumpRouter(menu.path)">
                 <div class="menu-card">
                   <h6 class="text-lg font-bold leading-none my-0">{{ menu.title }}</h6>
                   <p class="relative z-20 line-clamp-2 break-words text-sm">{{ menu.description }}</p>
@@ -27,6 +27,7 @@
 
 <script setup name="Index" lang="ts">
 import FloatActionProvider from '@/components/FloatActionProvider'
+const router = useRouter()
 
 const menuList = [
   {
@@ -37,7 +38,7 @@ const menuList = [
         id: 0,
         title: '数智监管驾驶舱',
         description: '快速了解运营业务整体状况',
-        path: '/operate',
+        path: '/dashboard/digital-supervision',
       },
       {
         id: 1,
@@ -55,11 +56,15 @@ const menuList = [
         id: 0,
         title: '基础配置',
         description: '提供单位管理、设备管理、资源上图、报警通知等基础功能',
-        path: '/organization',
+        path: '/system/dept',
       },
     ],
   },
-];
+]
+
+const jumpRouter = (routePath: string) => {
+  router.push(routePath)
+}
 </script>
 
 <style scoped lang="scss">
