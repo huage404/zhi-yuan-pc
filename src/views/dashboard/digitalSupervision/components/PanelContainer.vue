@@ -10,7 +10,7 @@
     <div :class="['h-full relative transition-width', isFold ? 'w-0' : 'w-[29.375rem]']">
       <div class="w-full h-full overflow-hidden">
         <div
-          :class="['w-[29.375rem] h-full bg-no-repeat bg-full px-1 py-2.5 space-y-1 flex flex-col']"
+          :class="['w-[29.375rem] h-full bg-no-repeat bg-full px-2 py-2.5 space-y-1 flex flex-col']"
           :style="{ backgroundImage: `url('${bgImageUrl}')`, backgroundSize: '100% 100%' }"
         >
           <slot></slot>
