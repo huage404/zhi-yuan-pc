@@ -3,18 +3,6 @@ import PanelCard from "@/views/dashboard/components/PanelCard.vue"
 import PanelCardTab from "@/views/dashboard/components/PanelCardTab.vue"
 
 const tableData = [
-  {
-    name: '智能预警',
-    count: '2048',
-    percentage: '50%',
-    onlineRate: '50%',
-  },
-  {
-    name: '智能预警',
-    count: '2048',
-    percentage: '50%',
-    onlineRate: '50%',
-  },
 ]
 </script>
 

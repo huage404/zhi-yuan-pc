@@ -1,7 +1,20 @@
 <script lang="ts" setup>
 import { cva } from 'class-variance-authority'
-import { TAlarmCardState, TMenuState } from "@/components/AlarmDialog/types/AlarmDialogSidebar"
-import { EAlarmDialogSidebarMenuKey } from "@/components/AlarmDialog/enmus/AlarmDialogSidebarEnum"
+import { EAlarmDialogSidebarMenuKey } from '@/components/AlarmDialog/enmus/AlarmDialogSidebarEnum'
+import type { TagProps } from 'element-plus'
+
+type TTagItem = { type: TagProps['type']; label: string }
+type TAlarmCardState = {
+  id: string | number
+  name: string
+  tags: TTagItem[]
+  address: string
+  date: string
+}
+type TMenuState<T> = {
+  label: string
+  key: T
+}
 
 const props = defineProps<{
   loading: boolean;

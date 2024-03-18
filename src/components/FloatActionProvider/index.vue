@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import AlarmDialogTriggerButton from '@/components/AlarmDialog'
+import AlarmDialogTriggerButton from '@/components/AlarmDialog/index.vue'
 </script>
 
 <template name="FloatActionProvider">

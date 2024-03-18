@@ -26,7 +26,7 @@
 </template>
 
 <script setup name="Index" lang="ts">
-import FloatActionProvider from '@/components/FloatActionProvider'
+import FloatActionProvider from '@/components/FloatActionProvider/index.vue'
 const router = useRouter()
 
 const menuList = [
@@ -40,12 +40,12 @@ const menuList = [
         description: '快速了解运营业务整体状况',
         path: '/dashboard/digital-supervision',
       },
-      {
-        id: 1,
-        title: '智慧消防云服务平台',
-        description: '快速了解运营业务整体状况',
-        path: '/servicePlatform',
-      },
+      // {
+      //   id: 1,
+      //   title: '智慧消防云服务平台',
+      //   description: '快速了解运营业务整体状况',
+      //   path: '/servicePlatform',
+      // },
     ],
   },
   {

@@ -30,7 +30,7 @@ import SideBar from './components/Sidebar/index.vue'
 import { AppMain, Navbar, Settings, TagsView } from './components'
 import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'
-import FloatActionProvider from '@/components/FloatActionProvider'
+import FloatActionProvider from '@/components/FloatActionProvider/index.vue'
 
 const settingsStore = useSettingsStore()
 const theme = computed(() => settingsStore.theme)

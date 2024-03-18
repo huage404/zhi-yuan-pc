@@ -97,6 +97,19 @@ export const constantRoutes: RouteOption[] = [
       },
     ],
   },
+  {
+    path: '/device/',
+    component: Layout,
+    hidden: false,
+    children: [
+      {
+        path: 'controller',
+        component: () => import('@/views/device/controller/index.vue'),
+        name: 'deviceController',
+        meta: { title: '设备控制', activeMenu: '/device', icon: '' },
+      },
+    ],
+  },
 ]
 
 // 动态路由，基于用户权限动态去加载

@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="flex flex-col">
     <div class="h-12 px-12 bg__header bg-no-repeat flex items-center ">
       <slot name="header" />
     </div>
-    <div class="p-5">
+    <div class="p-5 flex-1">
       <slot />
     </div>
   </div>

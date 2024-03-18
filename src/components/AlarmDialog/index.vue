@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 import Header from '@/components/AlarmDialog/Header.vue'
-import Sidebar from "@/components/AlarmDialog/Sidebar.vue"
-import Content from "@/components/AlarmDialog/Content.vue"
-import type { TAlarmCardState } from "@/components/AlarmDialog/types/AlarmDialogSidebar"
-import { getMsgListWithAlova } from "@/views/iot/alarm/api/alarm.api"
-import { usePagination } from "@alova/scene-vue"
-import Footer from "@/components/AlarmDialog/Footer.vue"
-import { Sunrise } from "@element-plus/icons-vue"
+import Sidebar from '@/components/AlarmDialog/Sidebar.vue'
+import Content from '@/components/AlarmDialog/Content.vue'
+import { getMsgListWithAlova } from '@/views/iot/alarm/api/alarm.api'
+import { usePagination } from '@alova/scene-vue'
 
 
 /*------------------------ Dialog Logic Start ---------------------------*/
@@ -17,7 +14,7 @@ const showDialog = () => {
   dialogVisible.value = true
 }
 const hideDialog = () => {
-  console.info("🚀 ~ log info: ----- dialogVisible:")
+  console.info('🚀 ~ log info: ----- dialogVisible:')
   dialogVisible.value = false
 }
 
@@ -47,11 +44,11 @@ const {
     total: (res: any) => {
       return res?.data?.total as number
     },
-    data: (res: any): TAlarmCardState[] => {
+    data: (res: any) => {
       return res?.data.rows || []
     }
   }
-);
+)
 
 const handleNextPage = () => {
   if(!isLastPage.value) {
@@ -61,7 +58,7 @@ const handleNextPage = () => {
 
 /*------------------------ Alarm Logic Start ---------------------------*/
 
-const iconDataBase = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiI+PHBhdGggZGF0YS1uYW1lPSLot6/lvoQgNjYxOSIgZD0iTTcuNDE5IDI2LjM4M3YtOC4wMzdhOC43MzMgOC43MzMgMCAwMTE3LjQ2NSAwdjguMDM3aDNhMS4xMyAxLjEzIDAgMTEwIDIuMjU5SDQuMTE4YTEuMTMgMS4xMyAwIDAxMC0yLjI1OWgzLjN6bTkuMzg0LTEzLjI1MWwtNC4zIDcuMDgyaDMuNDMybC0uODY5IDUuMyA0LjMtNy4wODJoLTMuNDMxem02LjU2LTcuNzc3YS44ODEuODgxIDAgMDEuMyAxLjE3M2wtMS41NjQgMi42OTQtMS40NzItLjgyNSAxLjU2NC0yLjY5NGEuODc3Ljg3NyAwIDAxMS4xNzMtLjM0OHptLTcuMjEyLTJhLjg4Mi44ODIgMCAwMS45MTIuODY5djMuMDQzSDE1LjI0VjQuMjI2YS44ODIuODgyIDAgMDEuOTEyLS44Njl6bS03LjIxMiAyYS44NC44NCAwIDAxMS4xMy4zbDEuNTY0IDIuNjk0LTEuNDc3LjgyNS0xLjU2NC0yLjY4OWEuODI3LjgyNyAwIDAxLjM0OC0xLjEzem0tNS4zIDUuM2EuOC44IDAgMDExLjEzLS4zbDIuNjk0IDEuNTY0LS44MjYgMS40NzgtMi42OTMtMS41NjhhLjg4MS44ODEgMCAwMS0uMy0xLjE3M3ptMjUuMDI1IDBhLjkuOSAwIDAxLS4zIDEuMTczbC0yLjY5OCAxLjU2OS0uODI1LTEuNDc3IDIuNjk0LTEuNTY0YS44NC44NCAwIDAxMS4xMy4zeiIgZmlsbD0iI2ZmNTA1MCIvPjwvc3ZnPg==`
+const iconDataBase = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiI+PHBhdGggZGF0YS1uYW1lPSLot6/lvoQgNjYxOSIgZD0iTTcuNDE5IDI2LjM4M3YtOC4wMzdhOC43MzMgOC43MzMgMCAwMTE3LjQ2NSAwdjguMDM3aDNhMS4xMyAxLjEzIDAgMTEwIDIuMjU5SDQuMTE4YTEuMTMgMS4xMyAwIDAxMC0yLjI1OWgzLjN6bTkuMzg0LTEzLjI1MWwtNC4zIDcuMDgyaDMuNDMybC0uODY5IDUuMyA0LjMtNy4wODJoLTMuNDMxem02LjU2LTcuNzc3YS44ODEuODgxIDAgMDEuMyAxLjE3M2wtMS41NjQgMi42OTQtMS40NzItLjgyNSAxLjU2NC0yLjY5NGEuODc3Ljg3NyAwIDAxMS4xNzMtLjM0OHptLTcuMjEyLTJhLjg4Mi44ODIgMCAwMS45MTIuODY5djMuMDQzSDE1LjI0VjQuMjI2YS44ODIuODgyIDAgMDEuOTEyLS44Njl6bS03LjIxMiAyYS44NC44NCAwIDAxMS4xMy4zbDEuNTY0IDIuNjk0LTEuNDc3LjgyNS0xLjU2NC0yLjY4OWEuODI3LjgyNyAwIDAxLjM0OC0xLjEzem0tNS4zIDUuM2EuOC44IDAgMDExLjEzLS4zbDIuNjk0IDEuNTY0LS44MjYgMS40NzgtMi42OTMtMS41NjhhLjg4MS44ODEgMCAwMS0uMy0xLjE3M3ptMjUuMDI1IDBhLjkuOSAwIDAxLS4zIDEuMTczbC0yLjY5OCAxLjU2OS0uODI1LTEuNDc3IDIuNjk0LTEuNTY0YS44NC44NCAwIDAxMS4xMy4zeiIgZmlsbD0iI2ZmNTA1MCIvPjwvc3ZnPg=='
 </script>
 
 <template>
